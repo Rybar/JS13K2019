@@ -9,7 +9,6 @@ init = () => {
   //stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
   //document.body.appendChild( stats.dom );
 
-  
   audioCtx = new AudioContext;
   audioMaster = audioCtx.createGain();
   audioMaster.connect(audioCtx.destination);
@@ -26,9 +25,6 @@ init = () => {
 
   ctx = c.getContext('2d');
   
-  
-
-
   music = new CPlayer();
   music.init(song);
   done = false;
@@ -39,25 +35,25 @@ init = () => {
     {name:'cellComplete', data: cellComplete},
     ]
   //music stuff-----------------------------------------------------
-  sndData.forEach(function(o){
-      var sndGenerator = new CPlayer();
-      sndGenerator.init(o.data);
-      var done = false;
-      setInterval(function () {
-        if (done) {
-          return;
-        }
-        done = sndGenerator.generate() == 1;
-        if(done){
-          let wave = sndGenerator.createWave().buffer;
-          audioCtx.decodeAudioData(wave, function(buffer) {
-            sounds[o.name] = buffer;
-            soundsReady++;
-            gameSong = playSound(sounds.song, 1, 0, 0.5, true);
-          })
-        }
-      },0)
-})
+      sndData.forEach(function(o){
+          var sndGenerator = new CPlayer();
+          sndGenerator.init(o.data);
+          var done = false;
+          setInterval(function () {
+            if (done) {
+              return;
+            }
+            done = sndGenerator.generate() == 1;
+            if(done){
+              let wave = sndGenerator.createWave().buffer;
+              audioCtx.decodeAudioData(wave, function(buffer) {
+                sounds[o.name] = buffer;
+                soundsReady++;
+                gameSong = playSound(sounds.song, 1, 0, 0.5, true);
+              })
+            }
+          },0)
+    })
     
   //FLAGS--------------------------------------------------------------
   paused = false;
@@ -92,7 +88,7 @@ loop = () => {
      step(tick);
    }
    draw(dt);
-
+   //stats.end();
   requestAnimationFrame(loop);
 }
 
@@ -119,14 +115,14 @@ draw = dt => {
   if(collide){
     boxFill = 'red';
   }
-
+  noiseGradBox(30,30,200,64);
   fr(x,y,64,64, boxFill);
   ln(lx, ly, ldx, ldy, 3);
 
   if(collide){
     collide.forEach(function(e){
       if(e){
-        console.log(e);
+        //console.log(e);
         fc(e[0], e[1]);
       }
     })
