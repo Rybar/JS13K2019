@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #111;
+    color: #ccc; 
+    height: 100%;
+}
+
+canvas {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    cursor: none;
+    margin: auto;
+}
+
+
