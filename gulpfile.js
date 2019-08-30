@@ -75,17 +75,17 @@ gulp.task('buildCSS', function () {
 gulp.task('buildJS', function () {
     return gulp.src(sourcePaths.js)
         .pipe(concat(distPaths.js_build_file))
-        // .pipe(uglify({
-        //     mangle:{
-        //         toplevel:true
-        //     },
-        //     compress:{
-        //         ecma:6,
-        //         arguments:true,
-        //         toplevel:true,
-        //         unsafe_comps: true
-        //     }
-        // }))
+        .pipe(uglify({
+            mangle:{
+                toplevel:true
+            },
+            compress:{
+                ecma:6,
+                arguments:true,
+                toplevel:true,
+                unsafe_comps: true
+            }
+        }))
         .pipe(gulp.dest(distPaths.build));
 });
 
