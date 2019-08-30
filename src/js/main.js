@@ -23,19 +23,20 @@ init = () => {
   sounds = {};
   prng = new PRNG(1019);
 
-  d = [
-  10240,                  // 00 //worldWidth = 10240;
-  10240,                  // 01 //worldHeight = 10240;
-  100,                    // 02 //deadzoneX = 100;
-  400,                    // 03 //deadzoneY = 100;
-  400,                    // 04 //player.x = 400;
-  400,                    // 05 //player.y = 400;
-  player.x-640/2,         // 06 //viewX = player.x-640/2;
-  player.y=360/2,         // 07 //viewY = player.y-360/2;
-  640,                    // 08 //viewW = 640;
-  360,                    // 09 //viewH = 360;
-  1000,                   // 10 //obstacleCount = 1000;
-  ]
+  data = [];
+
+  worldWidth = 10240;
+  worldHeight = 10240;
+
+  deadzoneX = 100;
+  deadzoneY = 100;
+  player.x = 400;
+  player.y = 400;
+  viewX = player.x-640/2;
+  viewY = player.y-360/2;
+  viewW = 640;
+  viewH = 360;
+  obstacleCount = 1000;
   bg = mC(worldWidth, worldHeight);
   spriteSheet = mC(1000, 1000);
 
