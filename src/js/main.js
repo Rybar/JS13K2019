@@ -18,42 +18,39 @@ init = () => {
   dt   = 0;
   start = elapsed = now = last = timeStamp();
 
-  
+  state = 'play';
+
   sounds = {};
   prng = new PRNG(1019);
 
-  deadzoneX = 500;
-  deadzoneY = 300;
-  viewX = player.x -640/2;
-  viewY = player.y -360/2;
+  worldWidth = 10240;
+  worldHeight = 10240;
+
+  deadzoneX = 100;
+  deadzoneY = 100;
   player.x = 400;
   player.y = 400;
-  viewW = 640
-  viewH = 360
+  viewX = player.x-640/2;
+  viewY = player.y-360/2;
+  viewW = 640;
+  viewH = 360;
+  obstacleCount = 1000;
+  bg = mC(worldWidth, worldHeight);
+  spriteSheet = mC(1000, 1000);
 
+  obstacles = [];
+  createObstacles();
 
   c.width = 640; c.height = 360;
   c.style = 'width: 1280px; height: 720px';
 
   gamectx = c.getContext('2d');
 
-  bg = mC(2560,2560);
-  bg.ctx.fillStyle = '#080';
-  bg.ctx.fillRect(0,0,2560,2560);
-  actx = bg.ctx;
-  for(let i = 0; i < 1000; i++){
-   
-    let x = prng.nextBoundedInt(0,2560);
-    let y = prng.nextBoundedInt(0,2560);
-    fr(x, y, 100, 100, 'rgba(0,50,0,0.55)');
-  }
-  actx = gamectx;
-
-  sc = mC(200, 200);
-  sprites = sc.c;
-  spritectx = sc.ctx
-  actx = spritectx;
-  fc(100,100,50, 'white',);
+  
+  drawBackground();
+  drawSprites();
+  drawPlayerSprite();
+  drawObstacleSprite();
   
   //change
   music = new CPlayer();
@@ -116,41 +113,11 @@ loop = () => {
    elapsed = now - start;
    while(dt > tick) {
      dt = dt - tick;
-     step(tick);
+     states[state].step(tick);
    }
-   draw(dt);
+   states[state].draw(dt);
    //stats.end();
   requestAnimationFrame(loop);
-}
-
-
-
-step = dt => {
-  if(Key.justReleased(Key.r)){
-    playSound(sounds.cellComplete, 1, 0, 0.5, false);
-    Key.update();
-  }
-  player.update();
-  if(player.x - viewX + deadzoneX > viewW){
-    viewX = player.x - (viewW - deadzoneX)
-  }
-  else if(player.x - deadzoneX < viewX){
-    viewX = player.x - deadzoneX
-  }
-  if(player.y - viewY + deadzoneY > viewH){
-    viewY = player.y -(viewH - deadzoneY)
-  }
-  else if(player.y - deadzoneY < viewY){
-    viewY = player.y - deadzoneY 
-  }
-}
-draw = dt => {
-  actx = gamectx;
-  fr(0,0,c.width,c.height,'red');
-  actx.drawImage(bg.c, viewX, viewY,640,360,0,0,640,360);
-  
-  //actx.drawImage(sprites, 100, 100);
-  player.draw();
 }
 
 timeStamp = () => {
@@ -159,4 +126,39 @@ timeStamp = () => {
   else
     return new Date().getTime();
 }
+
+createObstacles = () => {
+
+  for(let i = 0; i < obstacleCount; i++){
+    obstacles.push({
+      type: "obstacle",
+      x: prng.nextBoundedInt(0, worldWidth),
+      y: prng.nextBoundedInt(0, worldHeight),
+      width: 40,
+      height: 40
+    })
+  }
+}
+
+drawObstacles = () => {
+  obstacles.forEach(function(el, i, arr){
+    if(inView(el.x-viewX, el.y-viewH)){
+      sprite(sprites.obstacle, el.x-viewX, el.y-viewY)
+    }
+  })
+}
+
+sprites = {
+  player: {
+    x: 0, y: 0, width: 100, height: 100
+  },
+  obstacle: {
+    x: 100, y: 0, width: 80, height: 80
+  }
+}
 //----- END main.js---------------
+
+
+drawSprites = () => {
+
+}

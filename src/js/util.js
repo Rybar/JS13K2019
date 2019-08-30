@@ -110,3 +110,7 @@ class PRNG {
       return Math.floor(this.nextFloat() * (max - min) + min)
     }
   }
+
+function inView(x,y, viewpad = 64){
+return(x >= 0-viewpad && x <= viewW+viewpad && y >=0-viewpad && y <= viewH+viewpad);
+}

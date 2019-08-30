@@ -1,4 +1,5 @@
 player = {
+    type: "player",
     x: 0, 
     y: 0,
     width: 64,
@@ -10,12 +11,12 @@ player = {
     drag: 10,
     speed: 0.05,
 
-    draw: function(){
+    draw: function(dt){
         actx = gamectx;
-        actx.drawImage(sprites, this.x-viewX, this.y-viewY);
+        actx.drawImage(spriteSheet.c, 0,0,100,100, this.x-viewX-this.width/2, this.y-viewY-this.height/2, 100, 100);
     },
 
-    update: function(){
+    update: function(dt){
         if(Key.isDown(Key.a)){
             this.x -= this.speed;
         }else if(Key.isDown(Key.d)){
