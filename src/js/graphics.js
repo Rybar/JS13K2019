@@ -41,11 +41,11 @@ return{c:c, ctx:c.getContext('2d')};
 
 function drawBackground(){
     bg.ctx.fillStyle = '#181';
-    bg.ctx.fillRect(0,0,d[0], d[1]);
+    bg.ctx.fillRect(0,0,worldWidth, worldHeight);
     actx = bg.ctx;
     for(let i = 0; i < 80000; i++){
-    let x = prng.nextBoundedInt(0,d[0]);
-    let y = prng.nextBoundedInt(0,d[1]);
+    let x = prng.nextBoundedInt(0,worldWidth);
+    let y = prng.nextBoundedInt(0,worldHeight);
     fc(x, y, 40, 20, 'rgba(10,50,0,0.05)');
   }
 }
