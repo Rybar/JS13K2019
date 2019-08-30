@@ -1,22 +1,22 @@
 function fr(x,y,w,h,fill='#F0F'){
-    ctx.fillStyle = fill;
-    ctx.fillRect(x, y, w, h);
+    actx.fillStyle = fill;
+    actx.fillRect(x, y, w, h);
 }
 
 function ln(x,y,x2,y2, thick=1, style="#F0F"){
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.lineTo(x2,y2);
-    ctx.lineWidth = thick;
-    ctx.strokeStyle = style;
-    ctx.stroke();
+    actx.beginPath();
+    actx.moveTo(x,y);
+    actx.lineTo(x2,y2);
+    actx.lineWidth = thick;
+    actx.strokeStyle = style;
+    actx.stroke();
 }
 
 function fc(x, y, rad=4, style="#FF0"){
-    ctx.fillStyle = style;
-    ctx.beginPath();
-    ctx.arc(x, y, rad, 0, Math.PI*2);
-    ctx.fill();
+    actx.fillStyle = style;
+    actx.beginPath();
+    actx.arc(x, y, rad, 0, Math.PI*2);
+    actx.fill();
 };
 
 function noiseGradBox(x,y,w,h, fill0="#111", fill1="#FFF", size=1, type=0, amount=1000){
@@ -31,4 +31,10 @@ function noiseGradBox(x,y,w,h, fill0="#111", fill1="#FFF", size=1, type=0, amoun
         }
         
     }
+}
+
+function mC(w,h){
+let c = document.createElement('canvas');
+c.width = w; c.height= h;
+return{c:c, ctx:c.getContext('2d')};
 }

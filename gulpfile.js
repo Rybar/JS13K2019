@@ -32,13 +32,14 @@ var gulp          = require('gulp'),
             'src/css/*.css', 
         ],
         js: [
-            'src/js/first.js', 
-            'src/js/util.js',
-            'src/js/physics.js',
-            'src/js/graphics.js',
+        'src/js/first.js', 
+        'src/js/util.js',
+        'src/js/physics.js',   
 	    'src/js/musicplayer.js',
         'src/js/assets/song.js',
         'src/js/assets/cellcomplete.js',
+        'src/js/player.js',
+        'src/js/graphics.js',
         'src/js/main.js',
 	    'src/js/last.js'
         ],
@@ -60,7 +61,7 @@ gulp.task('serve', function () {
 });
 
 gulp.task('openbrowser', function () {
-    opn( 'http://' + server.host + ':' + server.port );
+    opn( 'http://' + server.host + '/_build/' +  ':' + server.port );
 });
 
 gulp.task('buildCSS', function () {
@@ -73,17 +74,17 @@ gulp.task('buildCSS', function () {
 gulp.task('buildJS', function () {
     return gulp.src(sourcePaths.js)
         .pipe(concat(distPaths.js_build_file))
-        .pipe(uglify({
-            mangle:{
-                toplevel:true
-            },
-            compress:{
-                ecma:6,
-                arguments:true,
-                toplevel:true,
-                unsafe_comps: true
-            }
-        }))
+        // .pipe(uglify({
+        //     mangle:{
+        //         toplevel:true
+        //     },
+        //     compress:{
+        //         ecma:6,
+        //         arguments:true,
+        //         toplevel:true,
+        //         unsafe_comps: true
+        //     }
+        // }))
         .pipe(gulp.dest(distPaths.build));
 });
 
@@ -118,4 +119,4 @@ gulp.task('watch', function () {
 });
 
 gulp.task('build', ['buildJS', 'buildCSS', 'buildIndex', 'zipBuild']);
-gulp.task('default', ['build', 'serve', 'watch']);
+gulp.task('default', ['build', 'watch']);

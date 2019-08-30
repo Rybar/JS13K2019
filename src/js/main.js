@@ -20,11 +20,42 @@ init = () => {
 
   
   sounds = {};
+  prng = new PRNG(1019);
+
+  deadzoneX = 500;
+  deadzoneY = 300;
+  viewX = player.x -640/2;
+  viewY = player.y -360/2;
+  player.x = 400;
+  player.y = 400;
+  viewW = 640
+  viewH = 360
+
+
   c.width = 640; c.height = 360;
   c.style = 'width: 1280px; height: 720px';
 
-  ctx = c.getContext('2d');
+  gamectx = c.getContext('2d');
+
+  bg = mC(2560,2560);
+  bg.ctx.fillStyle = '#080';
+  bg.ctx.fillRect(0,0,2560,2560);
+  actx = bg.ctx;
+  for(let i = 0; i < 1000; i++){
+   
+    let x = prng.nextBoundedInt(0,2560);
+    let y = prng.nextBoundedInt(0,2560);
+    fr(x, y, 100, 100, 'rgba(0,50,0,0.55)');
+  }
+  actx = gamectx;
+
+  sc = mC(200, 200);
+  sprites = sc.c;
+  spritectx = sc.ctx
+  actx = spritectx;
+  fc(100,100,50, 'white',);
   
+  //change
   music = new CPlayer();
   music.init(song);
   done = false;
@@ -95,38 +126,31 @@ loop = () => {
 
 
 step = dt => {
-  if(Key.justReleased(Key.a)){
+  if(Key.justReleased(Key.r)){
     playSound(sounds.cellComplete, 1, 0, 0.5, false);
     Key.update();
   }
+  player.update();
+  if(player.x - viewX + deadzoneX > viewW){
+    viewX = player.x - (viewW - deadzoneX)
+  }
+  else if(player.x - deadzoneX < viewX){
+    viewX = player.x - deadzoneX
+  }
+  if(player.y - viewY + deadzoneY > viewH){
+    viewY = player.y -(viewH - deadzoneY)
+  }
+  else if(player.y - deadzoneY < viewY){
+    viewY = player.y - deadzoneY 
+  }
 }
 draw = dt => {
-  let boxFill = 'green';
-  fr(0,0,c.width,c.height,'#303');
-  let x = 100 + Math.sin(elapsed/1000) * 50;
-  let y = 100 + Math.cos(elapsed/1000) * 50;
-
-  let lx = c.width/2 + Math.sin(elapsed/1000) * c.height/2;
-  let ly = c.height/2 + Math.cos(elapsed/1000) * c.height/2;
-  let ldx = c.width/2 + Math.sin(elapsed/1000 + Math.PI) * c.height/2;
-  let ldy = c.height/2 + Math.cos(elapsed/1000 + Math.PI) * c.height/2;
-
-  collide = lineBox(lx, ly, ldx, ldy, x, y, 64, 64);
-  if(collide){
-    boxFill = 'red';
-  }
-  noiseGradBox(30,30,200,64);
-  fr(x,y,64,64, boxFill);
-  ln(lx, ly, ldx, ldy, 3);
-
-  if(collide){
-    collide.forEach(function(e){
-      if(e){
-        //console.log(e);
-        fc(e[0], e[1]);
-      }
-    })
-  }
+  actx = gamectx;
+  fr(0,0,c.width,c.height,'red');
+  actx.drawImage(bg.c, viewX, viewY,640,360,0,0,640,360);
+  
+  //actx.drawImage(sprites, 100, 100);
+  player.draw();
 }
 
 timeStamp = () => {
