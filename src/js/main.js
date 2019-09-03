@@ -18,9 +18,11 @@ init = () => {
   dt   = 0;
   start = elapsed = now = last = timeStamp();
 
-  state = 'play';
+  state = 'loading';
 
   sounds = {};
+  soundsReady = 0;
+  totalSounds = 2;
   prng = new PRNG(1019);
 
   data = [];
@@ -48,7 +50,7 @@ init = () => {
 
   gamectx = c.getContext('2d');
 
-  
+  //initial canvas fillers. in-game everything done with drawImage
   drawBackground();
   drawSprites();
   drawPlayerSprite();
@@ -79,13 +81,13 @@ init = () => {
               audioCtx.decodeAudioData(wave, function(buffer) {
                 sounds[o.name] = buffer;
                 soundsReady++;
-                gameSong = playSound(sounds.song, 1, 0, 0.5, true);
+                //gameSong = playSound(sounds.song, 1, 0, 0.5, true);
               })
             }
           },0)
     })
     
-  //FLAGS--------------------------------------------------------------
+  
   paused = false;
   
    loop();
@@ -99,12 +101,13 @@ window.addEventListener('keyup', function (event) {
 window.addEventListener('keydown', function (event) {
   Key.onKeydown(event);
 }, false);
-window.addEventListener('blur', function (event) {
+c.addEventListener('blur', function (event) {
   paused = true;
 }, false);
-window.addEventListener('focus', function (event) {
+c.addEventListener('focus', function (event) {
   paused = false;
 }, false);
+
 
 
 

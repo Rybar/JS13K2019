@@ -41,7 +41,10 @@ var gulp          = require('gulp'),
         'src/js/player.js',
         'src/js/graphics.js',
         'src/js/main.js',
-        'src/js/states/play.js',
+            'src/js/states/play.js',
+            'src/js/states/gameover.js',
+            'src/js/states/title.js',
+            'src/js/states/loading.js',
 	    'src/js/last.js'
         ],
         mainHtml: [
