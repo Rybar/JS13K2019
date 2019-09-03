@@ -114,3 +114,10 @@ class PRNG {
 function inView(x,y, viewpad = 64){
 return(x >= 0-viewpad && x <= viewW+viewpad && y >=0-viewpad && y <= viewH+viewpad);
 }
+
+timeStamp = () => {
+  if (window.performance && window.performance.now)
+    return window.performance.now();
+  else
+    return new Date().getTime();
+}

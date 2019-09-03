@@ -19,6 +19,12 @@ init = () => {
   start = elapsed = now = last = timeStamp();
 
   state = 'loading';
+  loadingText = [
+    "LOADING",
+    "READY",
+    "press p to continue", 
+    "click to focus game"
+  ] 
 
   sounds = {};
   soundsReady = 0;
@@ -101,10 +107,10 @@ window.addEventListener('keyup', function (event) {
 window.addEventListener('keydown', function (event) {
   Key.onKeydown(event);
 }, false);
-c.addEventListener('blur', function (event) {
+window.addEventListener('blur', function (event) {
   paused = true;
 }, false);
-c.addEventListener('focus', function (event) {
+window.addEventListener('focus', function (event) {
   paused = false;
 }, false);
 
@@ -125,12 +131,7 @@ loop = () => {
   requestAnimationFrame(loop);
 }
 
-timeStamp = () => {
-  if (window.performance && window.performance.now)
-    return window.performance.now();
-  else
-    return new Date().getTime();
-}
+
 
 createObstacles = () => {
 
